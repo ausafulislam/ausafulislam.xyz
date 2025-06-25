@@ -1,0 +1,240 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import {
+  RiMedalLine,
+  RiExternalLinkLine,
+  RiZoomInLine,
+  RiLightbulbFlashLine,
+} from "react-icons/ri";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "./ui/dialog";
+import { RevealWrapper } from "next-reveal";
+import { SiUdemy, SiHp } from "react-icons/si";
+import { TbHexagonLetterUFilled } from "react-icons/tb";
+import { FaLaptopCode } from "react-icons/fa";
+import ShinyText from "./ShinyText";
+
+
+interface Certification {
+  title: string;
+  issuer: string;
+  date: string;
+  icon: React.ReactNode;
+  imagePath?: string;
+  credentialUrl?: string;
+}
+
+const certifications: Certification[] = [
+  {
+    title: "Business Communication Certificate",
+    issuer: "Hewlett-Packard (HP)",
+    date: "June 2025",
+    icon: <SiHp className="text-3xl text-[#0096D6]" />,
+    imagePath: "/images/certificates/hp-business-communication.jpg",
+    credentialUrl: "#", // Replace with actual URL if available
+  },
+  {
+    title: "Diploma in Artificial Intelligence",
+    issuer: "UniAthena",
+    date: "June 2025",
+    icon: <TbHexagonLetterUFilled className="text-3xl text-[#FF006E]" />,
+    imagePath: "/images/certificates/uniathena-ai-diploma.png",
+    credentialUrl: "#", // Replace with actual URL if available
+  },
+  {
+    title: "HTML & CSS Mastery Course",
+    issuer: "Udemy",
+    date: "June 2025",
+    icon: <SiUdemy className="text-3xl text-[#A435F0]" />,
+    imagePath: "/images/certificates/html-css-master-course.jpg",
+    credentialUrl: "#", // Replace with actual URL if available
+  },
+  {
+    title: "ChatGPT Masterclass",
+    issuer: "UniAthena",
+    date: "June 2025",
+    icon: <TbHexagonLetterUFilled className="text-3xl text-[#FF006E]" />,
+    imagePath: "/images/certificates/chatgpt-master-class.jpg",
+    credentialUrl: "#", // Replace with actual URL if available
+  },
+  {
+    title: "Complete Python Bootcamp",
+    issuer: "Udemy",
+    date: "June 2025",
+    icon: <SiUdemy className="text-3xl text-[#A435F0]" />,
+    imagePath: "/images/certificates/compelete-python-bootcamp.jpg",
+    credentialUrl: "#", // Replace with actual URL if available
+  },
+  {
+    title: "MERN Stack Webinar",
+    issuer: "SkillEcted",
+    date: "February 2025",
+    icon: <FaLaptopCode className="text-3xl text-[#4A90E2]" />,
+    imagePath: "/images/certificates/mern-stack-webinar.png",
+    credentialUrl: "#", // Replace with actual URL if available
+  },
+];
+
+
+const CertificateModal = ({ certification }: { certification: Certification }) => {
+  if (!certification.imagePath) return null;
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <button className="absolute inset-0 w-full h-full group">
+          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <RiZoomInLine className="text-3xl text-white" />
+          </div>
+        </button>
+      </DialogTrigger>
+      <DialogContent className="w-[90vw] md:w-[700px] h-[520px] rounded-2xl p-4 border-gradient bg-black/70 backdrop-blur-xl text-white shadow-xl">
+        <DialogTitle className="sr-only">{certification.title}</DialogTitle>
+
+        <div className="flex flex-col items-center justify-center h-full space-y-4">
+          {/* Certificate Image */}
+          <div className="relative w-full h-[500px] ">
+            <Image
+              src={certification.imagePath}
+              alt={certification.title}
+              fill
+              className="object-contain rounded-xl"
+              quality={100}
+              priority
+            />
+          </div>
+
+          {/* Certificate Info */}
+          <div className="flex flex-wrap items-center justify-between w-full gap-4 text-xs text-gray-300 px-1">
+            <div className="flex items-center gap-1">
+              <span className="font-medium">Issued by:</span>
+              {certification.issuer}
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="font-medium">Date:</span>
+              {certification.date}
+            </div>
+          </div>
+
+          {/* Optional Credential Button */}
+          {certification.credentialUrl && certification.credentialUrl !== "#" && (
+            <Link
+              href={certification.credentialUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-[#38bdf8] hover:underline"
+            >
+              View Credential
+            </Link>
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const CertificationCard = ({ certification }: { certification: Certification }) => {
+  return (
+    <div className="glass-card rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+      <div className="relative h-48 w-full">
+        {certification.imagePath && (
+          <>
+            <Image
+              src={certification.imagePath}
+              alt={certification.title}
+              fill
+              className="object-cover"
+              quality={80}
+              sizes="(100vw, 100vh)"
+            />
+            <CertificateModal certification={certification} />
+          </>
+        )}
+      </div>
+
+      <div className="p-5">
+        <div className="flex items-start gap-4 mb-3">
+          <div className="p-2 rounded-lg glass flex-shrink-0">
+            {certification.icon}
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold">{certification.title}</h3>
+            <p className="text-sm opacity-70">{certification.issuer}</p>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between mt-4">
+          <div className="flex items-center text-sm text-amber-400">
+            <RiMedalLine className="mr-2" />
+            <span>{certification.date}</span>
+          </div>
+
+          {certification.credentialUrl && (
+            <Link
+              href={certification.credentialUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              <RiExternalLinkLine />
+              Verify
+            </Link>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default function Certifications() {
+  return (
+    <section id="certifications" className="py-24 relative">
+      <div className="container mx-auto px-4">
+        <RevealWrapper origin="bottom" delay={100} duration={800} distance="20px" reset>
+          <div className="text-center mb-16">
+            <span className="px-4 py-2 glass rounded-full text-sm">
+              <ShinyText text="Professional Growth" disabled={false} speed={3} />
+            </span>
+            <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] mt-2">
+              My  <span className="text-gradient">Certifications</span>
+            </h2>
+            <p className="mt-4 max-w-2xl mx-auto">
+              Validated expertise through industry-recognized certifications demonstrating my commitment to professional excellence.
+            </p>
+          </div>
+        </RevealWrapper>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {certifications.map((certification, index) => (
+            <RevealWrapper
+              key={index}
+              origin="bottom"
+              delay={index * 100}
+              duration={800}
+              distance="20px"
+              reset
+            >
+              <CertificationCard certification={certification} />
+            </RevealWrapper>
+          ))}
+        </div>
+
+        <RevealWrapper origin="bottom" delay={200} duration={800} distance="20px" reset>
+          <div className="mt-16 p-10 glass-card rounded-xl text-center w-full max-w-7xl mx-auto">
+            <div className="flex flex-col items-center">
+              <RiLightbulbFlashLine className="text-5xl text-yellow-400 mb-4 animate-pulse" />
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold mb-3">
+                Building Smarter, Growing Faster
+              </h3>
+              <p className="max-w-3xl text-gray-300 text-sm sm:text-base">
+                I'm driven by curiosity and a deep passion for technology. Whether it’s mastering new frameworks, exploring cutting-edge AI tools, or diving into backend innovations, I dedicate time every week to grow and evolve as a developer. I believe continuous learning isn’t just an advantage — it’s essential.
+              </p>
+            </div>
+          </div>
+        </RevealWrapper>
+
+      </div>
+    </section>
+  );
+}

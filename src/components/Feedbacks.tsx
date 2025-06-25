@@ -1,0 +1,155 @@
+"use client";
+import React, { useEffect, useRef } from "react";
+import Image from "next/image";
+import { styles } from "./style";
+import { testimonials } from "./constants";
+import { RevealWrapper } from "next-reveal";
+import ShinyText from "./ShinyText";
+
+interface Testimonial {
+    testimonial: string;
+    name: string;
+    designation: string;
+    company: string;
+    image: string;
+}
+
+interface FeedbackCardProps extends Testimonial {
+    index: number;
+}
+
+const FeedbackCard: React.FC<FeedbackCardProps> = ({
+    index,
+    testimonial,
+    name,
+    designation,
+    company,
+    image,
+}) => (
+    <div className="flex items-center bg-gray-900/20 p-8 rounded-3xl flex-shrink-0 w-80 sm:w-96 scroll-snap-align-start backdrop-blur-md border border-white/10 hover:border-white/20 transition-all duration-300">
+        <RevealWrapper origin="right" delay={200} duration={1200} distance="50px" reset>
+            <p className="text-white font-extrabold text-5xl leading-none select-none">"</p>
+
+            <div className="mt-2">
+                <p className="text-white tracking-wide text-lg">{testimonial}</p>
+
+                <div className="mt-6 flex justify-between items-center gap-3">
+                    <div className="flex-1 flex flex-col overflow-hidden">
+                        <p className="text-white font-semibold text-base truncate">
+                            <span className="text-blue-400">@</span> {name}
+                        </p>
+                        <p className="mt-1 text-gray-400 text-xs truncate">
+                            {designation} of {company}
+                        </p>
+                    </div>
+
+                    <Image
+                        src={image}
+                        alt={`feedback_by-${name}`}
+                        width={50}
+                        height={50}
+                        className="rounded-full w-auto h-auto object-cover"
+                        priority={index === 0}
+                        loading={index === 0 ? undefined : "lazy"}
+                    />
+                </div>
+            </div>
+        </RevealWrapper>
+    </div>
+);
+
+const Feedbacks: React.FC = () => {
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const animationRef = useRef<number>();
+    const isHoveredRef = useRef(false);
+
+    useEffect(() => {
+        const scrollContainer = scrollContainerRef.current;
+        if (!scrollContainer) return;
+
+        // Clone testimonials to create infinite loop effect
+        const items = Array.from(scrollContainer.children) as HTMLElement[];
+        items.forEach(item => {
+            const clone = item.cloneNode(true) as HTMLElement;
+            scrollContainer.appendChild(clone);
+        });
+
+        let scrollAmount = 0;
+        const scrollSpeed = 0.9;
+
+        const animateScroll = () => {
+            if (isHoveredRef.current) {
+                animationRef.current = requestAnimationFrame(animateScroll);
+                return;
+            }
+
+            scrollAmount += scrollSpeed;
+            if (scrollAmount >= scrollContainer.scrollWidth / 2) {
+                scrollAmount = 0;
+                scrollContainer.scrollLeft = 0;
+            } else {
+                scrollContainer.scrollLeft = scrollAmount;
+            }
+            animationRef.current = requestAnimationFrame(animateScroll);
+        };
+
+        animationRef.current = requestAnimationFrame(animateScroll);
+
+        return () => {
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+            }
+        };
+    }, []);
+
+    const handleHover = () => {
+        isHoveredRef.current = true;
+    };
+
+    const handleHoverEnd = () => {
+        isHoveredRef.current = false;
+    };
+
+    return (
+        <section className="mt-16 relative">
+            {/* Shadow overlays */}
+            <div className="absolute inset-y-0 left-0 w-10 sm:w-20 md:w-32 lg:w-40 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-10 sm:w-20 md:w-32 lg:w-40 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+
+            <RevealWrapper origin="down" delay={200} duration={1200} distance="50px" reset>
+                <div className={`${styles.padding} min-h-[280px] relative z-20`}>
+                    <div className="animate-fadeIn max-w-4xl mx-auto text-center">
+                        <div>
+                            <span className="px-4 py-2 glass rounded-full text-sm inline-block">
+                                <ShinyText text="What others say's" disabled={false} speed={3} />
+                            </span>
+                        </div>
+                        <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] mt-2">
+                            Our <span className="text-gradient">Testimonials.</span>
+                        </h2>
+                    </div>
+                </div>
+            </RevealWrapper>
+
+            <RevealWrapper origin="right" delay={200} duration={1200} distance="50px" reset>
+                <div className="relative z-20">
+                    <div
+                        ref={scrollContainerRef}
+                        onMouseEnter={handleHover}
+                        onMouseLeave={handleHoverEnd}
+                        className={`-mt-20 pb-16 ${styles.paddingX} 
+                        flex space-x-6 overflow-x-hidden
+                        scrollbar-none sm:scrollbar-thin sm:scrollbar-thumb-gray-600 sm:scrollbar-track-gray-800
+                        sm:space-x-8 relative`}
+                    >
+                        {testimonials.map((testimonial, index) => (
+                            <FeedbackCard key={`${testimonial.name}-${index}`} index={index} {...testimonial} />
+                        ))}
+                    </div>
+                </div>
+            </RevealWrapper>
+        </section>
+    );
+};
+
+export default Feedbacks;
