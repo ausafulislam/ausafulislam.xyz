@@ -68,7 +68,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="#home" className="relative group ">
             <div className="relative group">
-              <div className="w-[65px] h-[65px] md:w-[75px] md:h-[75px] mx-4 overflow-hidden rounded-full border-2 border-white/20 transition-all group-hover:border-white/40">
+              <div className="w-[65px] h-[65px] md:w-[75px] md:h-[75px] lg:mx-4 overflow-hidden rounded-full border-2 border-white/20 transition-all group-hover:border-white/40">
                 <Image
                   src="/images/logo.png"
                   alt="Logo"
