@@ -61,14 +61,14 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className={`fixed w-full z-50 transition-all ${isScrolled ? "py-2" : "py-3"}`}>
-      <div className="container mx-auto px-4">
-        <nav className={`glass rounded-full flex items-center justify-between p-3 ${isScrolled ? 'backdrop-blur-lg' : 'backdrop-blur-md'}`}>
+    <header className={`fixed w-full z-50 transition-all ${isScrolled ? "py-2" : "py-2"}`}>
+      <div className="container mx-auto px-4 py-2">
+        <nav className={`glass rounded-full flex items-center justify-between h-20 md:h-auto p-3 ${isScrolled ? 'backdrop-blur-lg' : 'backdrop-blur-md'}`}>
 
           {/* Logo */}
-          <Link href="#home" className="relative group">
+          <Link href="#home" className="relative group ">
             <div className="relative group">
-              <div className="w-[75px] h-[75px] mx-4 overflow-hidden rounded-full border-2 border-white/20 transition-all group-hover:border-white/40">
+              <div className="w-[65px] h-[65px] md:w-[75px] md:h-[75px] mx-4 overflow-hidden rounded-full border-2 border-white/20 transition-all group-hover:border-white/40">
                 <Image
                   src="/images/logo.png"
                   alt="Logo"
@@ -108,7 +108,7 @@ export default function Navbar() {
 
           {/* Mobile Button */}
           <div
-            className="lg:hidden glass-button p-2 mx-1 rounded-full text-xl"
+            className="lg:hidden glass-button p-1 md:p-2 mx-1 rounded-full text-xl"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <HamburgerButton isOpen={isMenuOpen} onClick={() => setIsMenuOpen(!isMenuOpen)} />

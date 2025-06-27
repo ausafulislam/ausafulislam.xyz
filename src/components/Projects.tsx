@@ -30,9 +30,9 @@ import {
   SiApachenetbeanside,
   SiVite,
 } from "react-icons/si";
-import { RevealWrapper } from "next-reveal";
 import ShinyText from "./ShinyText";
 import { AnimatedButton } from "./AnimatedButton";
+import ScrollReveal from "./ScrollReveal";
 
 interface TechStack {
   name: string;
@@ -269,14 +269,7 @@ const categories = ["All", "Web Apps", "Mobile", "UI/UX", "E-Commerce"];
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
-    <RevealWrapper
-      key={index}
-      origin="bottom"
-      delay={index * 100}
-      duration={600}
-      distance="20px"
-      reset
-    >
+    <ScrollReveal direction="up" delayMultiplier={index * 0.1}>
       <Card className="overflow-hidden h-full glass-card border-0 group">
         <div className="relative h-48 overflow-hidden">
           <Image
@@ -331,7 +324,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           </div>
         </div>
       </Card>
-    </RevealWrapper>
+    </ScrollReveal>
   );
 }
 
@@ -347,7 +340,7 @@ export default function Projects() {
   return (
     <section id="projects" className="py-24 relative">
       <div className="container mx-auto px-4">
-        <RevealWrapper origin="bottom" delay={100} duration={800} distance="20px" reset>
+        <ScrollReveal direction="up">
           <div className="text-center mb-16">
             <span className="px-4 py-2 glass rounded-full text-sm">
               <ShinyText text="Portfolio" disabled={false} speed={3} />
@@ -360,9 +353,9 @@ export default function Projects() {
               and innovative solutions using modern technologies and best practices.
             </p>
           </div>
-        </RevealWrapper>
+        </ScrollReveal>
 
-        <RevealWrapper origin="bottom" delay={200} duration={700} distance="20px" reset>
+        <ScrollReveal direction="up" delayMultiplier={0.1}>
           <div className="flex justify-center flex-wrap gap-3 mb-12">
             {categories.map((category, index) => (
               <AnimatedButton
@@ -371,11 +364,11 @@ export default function Projects() {
                   ? "glass text-white"
                   : "flex items-center text-white/50 gap-2 hover:scale-105 transition-transform duration-3000"
                   }`}
-                containerClassName="h-auto" // Auto-height
+                containerClassName="h-auto"
                 borderClassName={
                   activeCategory === category
                     ? "opacity-80"
-                    : "opacity-0 hover:opacity-80" // Only show border when active
+                    : "opacity-0 hover:opacity-80"
                 }
                 onClick={() => setActiveCategory(category)}
                 aria-label={`Filter by ${category}`}
@@ -384,7 +377,7 @@ export default function Projects() {
               </AnimatedButton>
             ))}
           </div>
-        </RevealWrapper>
+        </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.length > 0 ? (
@@ -398,7 +391,7 @@ export default function Projects() {
           )}
         </div>
 
-        <RevealWrapper origin="bottom" delay={300} duration={600} distance="20px" reset>
+        <ScrollReveal direction="up" delayMultiplier={0.2}>
           <div className="mt-12 flex flex-wrap justify-center gap-4">
             <Link href="https://github.com/ausafulislam/ausaf-x-projects" target="_blank" rel="noopener noreferrer">
               <AnimatedButton
@@ -410,8 +403,8 @@ export default function Projects() {
               </AnimatedButton>
             </Link>
           </div>
-        </RevealWrapper>
-      </div >
-    </section >
+        </ScrollReveal>
+      </div>
+    </section>
   );
 }

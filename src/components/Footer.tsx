@@ -4,12 +4,11 @@ import {
   RiLinkedinBoxLine,
   RiGithubLine,
   RiTwitterXLine,
-  RiDribbbleLine,
   RiArrowUpLine,
 } from "react-icons/ri";
 import { TbBrandLinktree } from "react-icons/tb";
 import Link from "next/link";
-import { RevealWrapper } from "next-reveal";
+import ScrollReveal from "./ScrollReveal";
 
 interface SocialLink {
   name: string;
@@ -45,21 +44,23 @@ export default function Footer() {
     <footer className="relative pt-24 pb-10 overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Footer Card Section */}
-        <RevealWrapper origin="bottom" delay={100} duration={800} distance="20px" reset>
+        <ScrollReveal direction="up">
           <div className="glass-card p-10 mb-10 relative">
             <div className="absolute -top-8 -right-8 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
             <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-gradient-to-tr from-pink-500/20 to-blue-500/20 rounded-full blur-3xl"></div>
 
-            {/* Grid Content Reveal */}
-            <RevealWrapper origin="bottom" delay={200} duration={1000} distance="30px" reset>
-              <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-                <div className="lg:col-span-2">
+            <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+              <div className="lg:col-span-2">
+                <ScrollReveal direction="left" delayMultiplier={0.1}>
                   <h3 className="text-2xl font-bold text-gradient mb-4 uppercase">Ausaf ul Islam</h3>
+                </ScrollReveal>
+                <ScrollReveal direction="left" delayMultiplier={0.2}>
                   <p className="opacity-80 max-w-md mb-6">
-                    A creative full-stack developer passionate about building
-                    modern web applications with cutting-edge technologies and delivering
-                    exceptional user experiences.
+                    An innovative full-stack developer who is enthusiastic about
+                    creating cutting-edge web applications and providing outstanding user experiences.
                   </p>
+                </ScrollReveal>
+                <ScrollReveal direction="left" delayMultiplier={0.3}>
                   <div className="flex gap-3 mb-6">
                     {socialLinks.map((social, index) => (
                       <Link
@@ -74,13 +75,17 @@ export default function Footer() {
                       </Link>
                     ))}
                   </div>
-                </div>
+                </ScrollReveal>
+              </div>
 
-                <div>
+              <div>
+                <ScrollReveal direction="up" delayMultiplier={0.2}>
                   <h4 className="text-lg font-semibold text-gradient mb-4">Quick Links</h4>
-                  <ul className="space-y-3">
-                    {footerLinks.map((link, index) => (
-                      <li key={index}>
+                </ScrollReveal>
+                <ul className="space-y-3">
+                  {footerLinks.map((link, index) => (
+                    <ScrollReveal key={index} direction="up" delayMultiplier={0.3 + (index * 0.1)}>
+                      <li>
                         <Link
                           href={link.href}
                           className="relative inline-block text-gray-300 transition-colors duration-300 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-[#3b82f6] after:transition-all after:duration-300 hover:after:w-full"
@@ -88,26 +93,32 @@ export default function Footer() {
                           {link.label}
                         </Link>
                       </li>
-                    ))}
-                  </ul>
-
-                </div>
-
-                <div>
-                  <h4 className="text-lg font-semibold text-gradient mb-4">Contact</h4>
-                  <ul className="space-y-3 opacity-80">
-                    <li>ausafdev@gmail.com</li>
-                    <li>+92 (345) 922-4446</li>
-                    <li>Karachi, Sindh Province, Pakistan</li>
-                  </ul>
-                </div>
+                    </ScrollReveal>
+                  ))}
+                </ul>
               </div>
-            </RevealWrapper>
-          </div>
-        </RevealWrapper>
 
-        {/* Bottom Bar Reveal */}
-        <RevealWrapper origin="bottom" delay={300} duration={800} distance="20px" reset>
+              <div>
+                <ScrollReveal direction="up" delayMultiplier={0.3}>
+                  <h4 className="text-lg font-semibold text-gradient mb-4">Contact</h4>
+                </ScrollReveal>
+                <ul className="space-y-3 opacity-80">
+                  <ScrollReveal direction="right" delayMultiplier={0.4}>
+                    <li>ausafdev@gmail.com</li>
+                  </ScrollReveal>
+                  <ScrollReveal direction="right" delayMultiplier={0.5}>
+                    <li>+92 (345) 922-4446</li>
+                  </ScrollReveal>
+                  <ScrollReveal direction="right" delayMultiplier={0.6}>
+                    <li>Karachi, Sindh Province, Pakistan</li>
+                  </ScrollReveal>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal direction="up" delayMultiplier={0.4}>
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="opacity-60 text-sm">
               © {new Date().getFullYear()} Ausaf ul Islam. All rights reserved.
@@ -121,7 +132,7 @@ export default function Footer() {
               <RiArrowUpLine className="text-lg" />
             </button>
           </div>
-        </RevealWrapper>
+        </ScrollReveal>
       </div>
     </footer>
   );

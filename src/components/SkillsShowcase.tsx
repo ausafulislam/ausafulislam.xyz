@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { RevealWrapper } from "next-reveal";
 import {
   RiReactjsFill, RiHtml5Fill, RiCss3Fill, RiJavascriptFill, RiNodejsFill,
   RiTerminalBoxFill, RiDatabase2Fill, RiGithubFill, RiServerFill,
@@ -9,19 +8,19 @@ import {
 } from "react-icons/ri";
 import { SiDjango, SiTypescript, SiPython } from "react-icons/si";
 import { TbBrandThreejs } from "react-icons/tb";
-
-
-
+import { FaWordpress } from "react-icons/fa";
 import ShinyText from "./ShinyText";
 import { AnimatedButton } from "./AnimatedButton";
+import ScrollReveal from "./ScrollReveal";
 
 interface Skill {
   name: string;
   icon: React.ReactNode;
   color: string;
   category: "frontend" | "backend" | "database" | "devops" | "design";
-  proficiency: number; // 1-100
+  proficiency: number;
 }
+
 
 const skills: Skill[] = [
   { name: "React", icon: <RiReactjsFill className="text-4xl" />, color: "#61DAFB", category: "frontend", proficiency: 95 },
@@ -34,6 +33,7 @@ const skills: Skill[] = [
   { name: "CSS3", icon: <RiCss3Fill className="text-4xl" />, color: "#F7DF1E", category: "frontend", proficiency: 92 },
   { name: "Three.js", icon: <TbBrandThreejs className="text-4xl" />, color: "#FFFFFF", category: "frontend", proficiency: 75 },
   { name: "Node.js", icon: <RiNodejsFill className="text-4xl" />, color: "#339933", category: "backend", proficiency: 92 },
+  { name: "WordPress", icon: <FaWordpress className="text-4xl" />, color: "#00749C", category: "backend", proficiency: 75 },
   { name: "Django", icon: <SiDjango className="text-4xl" />, color: "#8b5cf6", category: "backend", proficiency: 85 },
   { name: "Python", icon: <SiPython className="text-4xl" />, color: "#3776AB", category: "backend", proficiency: 78 },
   { name: "MongoDB", icon: <RiDatabase2Fill className="text-4xl" />, color: "#47A248", category: "database", proficiency: 88 },
@@ -68,10 +68,11 @@ export default function SkillsShowcase() {
   function cn(...classes: (string | false | null | undefined)[]): string {
     return classes.filter(Boolean).join(" ");
   }
+
   return (
     <section className="py-24 relative overflow-hidden" id="skills" ref={sectionRef}>
       <div className="container mx-auto px-4">
-        <RevealWrapper origin="bottom" delay={200} duration={600} distance="50px">
+        <ScrollReveal direction="up">
           <div className="text-center mb-16">
             <span className="px-4 py-2 glass rounded-full text-sm">
               <ShinyText text="My Expertise" disabled={false} speed={3} />
@@ -84,9 +85,9 @@ export default function SkillsShowcase() {
               technologies I use to build powerful, scalable, and visually stunning web applications.
             </p>
           </div>
-        </RevealWrapper>
+        </ScrollReveal>
 
-        <RevealWrapper origin="bottom" delay={300} duration={600} distance="20px">
+        <ScrollReveal direction="up" delayMultiplier={0.1}>
           <div className="flex justify-center flex-wrap gap-3 mb-12">
             {categories.map((category) => (
               <AnimatedButton
@@ -110,18 +111,11 @@ export default function SkillsShowcase() {
               </AnimatedButton>
             ))}
           </div>
-        </RevealWrapper>
-
+        </ScrollReveal>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {filteredSkills.map((skill, index) => (
-            <RevealWrapper
-              key={skill.name}
-              origin="bottom"
-              delay={index * 60}
-              duration={500}
-              distance="30px"
-            >
+            <ScrollReveal key={index} direction="up" delayMultiplier={index * 0.05}>
               <div
                 className="glass-card p-4 flex flex-col items-center justify-center h-40 relative group"
                 onMouseEnter={() => setHoveredSkill(skill.name)}
@@ -152,11 +146,11 @@ export default function SkillsShowcase() {
                   <span className="glass-card px-2 py-1 rounded-md">{skill.proficiency}%</span>
                 </div>
               </div>
-            </RevealWrapper>
+            </ScrollReveal>
           ))}
         </div>
 
-        <RevealWrapper origin="bottom" delay={400} duration={600} distance="50px">
+        <ScrollReveal direction="up" delayMultiplier={0.2}>
           <div className="mt-24 glass-card text-gray-300 text-sm sm:text-base p-8 rounded-xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
@@ -166,10 +160,10 @@ export default function SkillsShowcase() {
                 <p className="mb-4">
                   My journey in tech is driven by curiosity and a deep passion for building impactful digital experiences.
                   From crafting sleek frontends with React and Next.js to exploring the power of Python, Django, and AI —
-                  I’m constantly evolving as a developer.
+                  I'm constantly evolving as a developer.
                 </p>
                 <p>
-                  I believe that great developers are lifelong learners. Whether it’s building real-world projects,
+                  I believe that great developers are lifelong learners. Whether it's building real-world projects,
                   contributing to open-source, or diving deep into agentic AI systems — I stay committed to sharpening my skills
                   every single day.
                 </p>
@@ -201,14 +195,13 @@ export default function SkillsShowcase() {
                   </li>
                 </ul>
               </div>
-
             </div>
           </div>
-        </RevealWrapper>
-      </div>
+        </ScrollReveal>
 
-      <div className="absolute top-40 -left-20 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-40 -right-20 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-40 -left-20 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-40 -right-20 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl"></div>
+      </div>
     </section>
   );
 }

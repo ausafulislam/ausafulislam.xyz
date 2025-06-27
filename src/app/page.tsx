@@ -11,7 +11,7 @@ import Certifications from "@/components/Certifications";
 import SkillsShowcase from "@/components/SkillsShowcase";
 import Feedbacks from "@/components/Feedbacks";
 import AnimatedTags from "@/components/Tags";
-import HolographicLoader from "@/components/Loading"; // assuming this is your loader component
+import HolographicLoader from "@/components/Loading";
 import CodeInspiration from "@/components/CodeInspiration";
 import BusinessSection from "@/components/BusinessSection";
 

@@ -4,18 +4,17 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   RiArrowRightLine,
-  RiCodeSSlashLine,
   RiGithubFill,
   RiLinkedinBoxFill,
   RiTwitterXFill
 } from "react-icons/ri";
 import TerminalTypingEffect from "./InfiniteTypingEffect";
-import { RevealWrapper } from "next-reveal";
 import CircularTextAnimation from "./CircularTextAnimation";
 import ShinyText from "./ShinyText";
 import TextFocus from "./TextFocus";
 import Image from "next/image";
 import { AnimatedButton } from "./AnimatedButton";
+import ScrollReveal from "./ScrollReveal";
 
 export default function Hero() {
   const [loading, setLoading] = useState(true);
@@ -34,12 +33,14 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
           {/* Left Content */}
-          <RevealWrapper origin="left" delay={100} duration={800} distance="30px" reset>
-            <div className="mt-10 md:mt-2">
+          <div className="mt-10 md:mt-2">
+            <ScrollReveal direction="up">
               <span className="px-4 py-2 glass rounded-full text-sm">
                 <ShinyText text="Welcome to my world !" disabled={false} speed={3} />
               </span>
+            </ScrollReveal>
 
+            <ScrollReveal direction="up" delayMultiplier={0.1}>
               <div className="font-bold mt-6 w-full max-w-4xl mx-auto px-2">
                 <TextFocus
                   sentence="Modern Full Stack & AI Developer"
@@ -54,15 +55,18 @@ export default function Hero() {
               2xl:text-[4rem]"
                 />
               </div>
+            </ScrollReveal>
 
-
+            <ScrollReveal direction="up" delayMultiplier={0.2}>
               <p className="mt-6 text-lg opacity-80 max-w-lg">
-                I'm Ausaf ul Islam, a passionate developer specialized in
-                creating stunning web experiences that combine cutting-edge
-                technology with elegant design. From concept to deployment, I
-                build solutions that make an impact.
+                I'm Ausaf ul Islam, an enthusiastic developer with a focus on producing
+                breathtaking online experiences that blend state-of-the-art technology
+                with sophisticated design. I create impactful solutions from conception
+                to implementation
               </p>
+            </ScrollReveal>
 
+            <ScrollReveal direction="up" delayMultiplier={0.3}>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link href="#projects">
                   <AnimatedButton
@@ -82,7 +86,9 @@ export default function Hero() {
                   </AnimatedButton>
                 </Link>
               </div>
+            </ScrollReveal>
 
+            <ScrollReveal direction="up" delayMultiplier={0.4}>
               <div className="mt-12 flex items-center gap-6">
                 <div className="flex items-center gap-4">
                   <Link
@@ -114,8 +120,8 @@ export default function Hero() {
                   <div className="relative flex items-center justify-center">
                     <CircularTextAnimation
                       text="AUSAFULISLAM*DEVELOPER*"
-                      radius={40}  // Adjusted radius for smaller size
-                      fontSize="0.6rem"  // Smaller font size
+                      radius={40}
+                      fontSize="0.6rem"
                       className="absolute font-bold"
                     />
                     <div className="absolute z-10">
@@ -136,11 +142,11 @@ export default function Hero() {
                   </div>
                 </div>
               </div>
-            </div>
-          </RevealWrapper>
+            </ScrollReveal>
+          </div>
 
           {/* Right Content - Typing Canvas */}
-          <RevealWrapper origin="right" delay={300} duration={800} distance="30px" reset>
+          <ScrollReveal direction="left" delayMultiplier={0.2}>
             <div className="w-full h-[500px]">
               {loading ? (
                 <div className="h-full flex items-center justify-center">
@@ -150,16 +156,18 @@ export default function Hero() {
                 <TerminalTypingEffect />
               )}
             </div>
-          </RevealWrapper>
+          </ScrollReveal>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-6 sm:bottom-10 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
-        <div className="w-6 h-10 sm:w-8 sm:h-14 border-2 border-white/30 rounded-full flex justify-center">
-          <div className="w-1 h-2 sm:w-1.5 sm:h-3 bg-white/60 rounded-full mt-2 animate-pulse"></div>
+      <ScrollReveal direction="up" delayMultiplier={0.5}>
+        <div className="absolute bottom-6 sm:bottom-10 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+          <div className="w-6 h-10 sm:w-8 sm:h-14 border-2 border-white/30 rounded-full flex justify-center">
+            <div className="w-1 h-2 sm:w-1.5 sm:h-3 bg-white/60 rounded-full mt-2 animate-pulse"></div>
+          </div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

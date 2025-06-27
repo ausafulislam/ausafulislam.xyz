@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import ScrollReveal from "./ScrollReveal";
 
 const TAGS = [
     "#ReactJS", "#NextJS", "#TypeScript", "#JavaScript", "#NodeJS", "#WebDev",
@@ -86,21 +87,23 @@ const AnimatedTags = () => {
     }
 
     return (
-        <section
-            ref={containerRef}
-            className="relative py-12 overflow-hidden text-gray-400"
-        >
-            {/* Shadow overlays */}
-            <div className="absolute inset-y-0 left-0 w-10 sm:w-20 md:w-32 lg:w-40 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-10 sm:w-20 md:w-32 lg:w-40 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+        <ScrollReveal direction="up">
+            <section
+                ref={containerRef}
+                className="relative py-12 overflow-hidden text-gray-400"
+            >
+                {/* Shadow overlays */}
+                <div className="absolute inset-y-0 left-0 w-10 sm:w-20 md:w-32 lg:w-40 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+                <div className="absolute inset-y-0 right-0 w-10 sm:w-20 md:w-32 lg:w-40 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
 
-            <div className="relative">
-                {renderTags(TAGS, 0)}
-                {renderTags(TAGS, 1)}
-                {renderTags(TAGS, 2)}
-                {renderTags(TAGS, 3)}
-            </div>
-        </section>
+                <div className="relative">
+                    {renderTags(TAGS, 0)}
+                    {renderTags(TAGS, 1)}
+                    {renderTags(TAGS, 2)}
+                    {renderTags(TAGS, 3)}
+                </div>
+            </section>
+        </ScrollReveal>
     );
 };
 

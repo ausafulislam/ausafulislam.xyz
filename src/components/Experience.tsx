@@ -6,11 +6,10 @@ import {
     VerticalTimeline,
     VerticalTimelineElement,
 } from "react-vertical-timeline-component";
-
 import "react-vertical-timeline-component/style.min.css";
 import { experiences } from "../components/constants";
-import { RevealWrapper } from "next-reveal";
 import ShinyText from "./ShinyText";
+import ScrollReveal from "./ScrollReveal";
 
 interface ExperiencePoint {
     title: string;
@@ -23,14 +22,16 @@ interface ExperiencePoint {
 
 interface ExperienceCardProps {
     experience: ExperiencePoint;
+    index: number;
 }
 
-const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience }) => {
+const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience, index }) => {
     return (
         <VerticalTimelineElement
             contentStyle={{
-                background: "#1d1836",
-                color: "#fff",
+                background: "transparent", // Transparent to allow glass effect
+                padding: "0", // Remove default padding
+                boxShadow: "none", // Remove default shadow
             }}
             contentArrowStyle={{ borderRight: "7px solid #232631" }}
             date={experience.date}
@@ -48,28 +49,29 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience }) => {
                     </div>
                 </div>
             }
-
         >
-            <div>
-                <h3 className="text-white text-[24px] font-bold">
-                    {experience.title}
-                </h3>
-                <p className="text-gray-400 text-[16px] font-semibold m-0">
-                    {experience.company_name}
-                </p>
-            </div>
+            {/* Glass card wrapper */}
+            <div className="glass-card-experience px-6 py-4 rounded-xl">
+                <div>
+                    <h3 className="text-white text-[24px] font-bold">{experience.title}</h3>
+                    <p className="text-gray-400 text-[16px] font-semibold m-0">
+                        {experience.company_name}
+                    </p>
+                </div>
 
-            <ul className="mt-5 list-disc ml-5 space-y-2">
-                {experience.points.map((point, index) => (
-                    <li
-                        key={`experience-point-${index}`}
-                        className="text-gray-200 text-[14px] pl-1 tracking-wider"
-                    >
-                        {point}
-                    </li>
-                ))}
-            </ul>
+                <ul className="mt-5 list-disc ml-5 space-y-2">
+                    {experience.points.map((point, pointIndex) => (
+                        <li
+                            key={`experience-point-${pointIndex}`}
+                            className="text-gray-200 text-[14px] pl-1 tracking-wider"
+                        >
+                            {point}
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </VerticalTimelineElement>
+
     );
 };
 
@@ -77,42 +79,29 @@ const Experience: React.FC = () => {
     return (
         <>
             {/* Section Heading */}
-            <RevealWrapper
-                origin="top"
-                delay={200}
-                duration={1000}
-                distance="30px"
-                reset
-            >
+            <ScrollReveal direction="up">
                 <div className="text-center my-12">
                     <span className="px-4 py-2 glass rounded-full text-sm">
                         <ShinyText text="What I have done so far" disabled={false} speed={3} />
                     </span>
                     <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] mt-2">
-                        Journey  <span className="text-gradient">Experience</span>
+                        Journey <span className="text-gradient">Experience</span>
                     </h2>
                 </div>
-            </RevealWrapper>
+            </ScrollReveal>
 
             {/* Timeline */}
-            <RevealWrapper
-                origin="bottom"
-                delay={300}
-                duration={1200}
-                distance="40px"
-                reset
-            >
-                <div className="mt-20 flex flex-col">
-                    <VerticalTimeline>
-                        {experiences.map((experience, index) => (
-                            <ExperienceCard
-                                key={`experience-${index}`}
-                                experience={experience as ExperiencePoint}
-                            />
-                        ))}
-                    </VerticalTimeline>
-                </div>
-            </RevealWrapper>
+            <div className="mt-20 flex flex-col">
+                <VerticalTimeline>
+                    {experiences.map((experience, index) => (
+                        <ExperienceCard
+                            key={`experience-${index}`}
+                            experience={experience as ExperiencePoint}
+                            index={index}
+                        />
+                    ))}
+                </VerticalTimeline>
+            </div>
         </>
     );
 };

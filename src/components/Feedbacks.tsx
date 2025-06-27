@@ -1,10 +1,10 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { styles } from "./style";
+import { styles } from "../hooks/style";
 import { testimonials } from "./constants";
-import { RevealWrapper } from "next-reveal";
 import ShinyText from "./ShinyText";
+import ScrollReveal from "./ScrollReveal";
 
 interface Testimonial {
     testimonial: string;
@@ -27,12 +27,10 @@ const FeedbackCard: React.FC<FeedbackCardProps> = ({
     image,
 }) => (
     <div className="flex items-center bg-gray-900/20 p-8 rounded-3xl flex-shrink-0 w-80 sm:w-96 scroll-snap-align-start backdrop-blur-md border border-white/10 hover:border-white/20 transition-all duration-300">
-        <RevealWrapper origin="right" delay={200} duration={1200} distance="50px" reset>
+        <ScrollReveal direction={index % 2 === 0 ? "left" : "right"} delayMultiplier={index * 0.1}>
             <p className="text-white font-extrabold text-5xl leading-none select-none">"</p>
-
             <div className="mt-2">
                 <p className="text-white tracking-wide text-lg">{testimonial}</p>
-
                 <div className="mt-6 flex justify-between items-center gap-3">
                     <div className="flex-1 flex flex-col overflow-hidden">
                         <p className="text-white font-semibold text-base truncate">
@@ -42,7 +40,6 @@ const FeedbackCard: React.FC<FeedbackCardProps> = ({
                             {designation} of {company}
                         </p>
                     </div>
-
                     <Image
                         src={image}
                         alt={`feedback_by-${name}`}
@@ -54,7 +51,7 @@ const FeedbackCard: React.FC<FeedbackCardProps> = ({
                     />
                 </div>
             </div>
-        </RevealWrapper>
+        </ScrollReveal>
     </div>
 );
 
@@ -62,20 +59,18 @@ const Feedbacks: React.FC = () => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const animationRef = useRef<number>();
     const isHoveredRef = useRef(false);
+    const [duplicated, setDuplicated] = useState<Testimonial[]>([]);
+
+    useEffect(() => {
+        setDuplicated([...testimonials, ...testimonials, ...testimonials, ...testimonials, ...testimonials, ...testimonials, ...testimonials, ...testimonials, ...testimonials, ...testimonials]); // duplicate list for infinite effect
+    }, []);
 
     useEffect(() => {
         const scrollContainer = scrollContainerRef.current;
         if (!scrollContainer) return;
 
-        // Clone testimonials to create infinite loop effect
-        const items = Array.from(scrollContainer.children) as HTMLElement[];
-        items.forEach(item => {
-            const clone = item.cloneNode(true) as HTMLElement;
-            scrollContainer.appendChild(clone);
-        });
-
         let scrollAmount = 0;
-        const scrollSpeed = 0.9;
+        const scrollSpeed = 1.5;
 
         const animateScroll = () => {
             if (isHoveredRef.current) {
@@ -100,7 +95,7 @@ const Feedbacks: React.FC = () => {
                 cancelAnimationFrame(animationRef.current);
             }
         };
-    }, []);
+    }, [duplicated]);
 
     const handleHover = () => {
         isHoveredRef.current = true;
@@ -113,11 +108,11 @@ const Feedbacks: React.FC = () => {
     return (
         <section className="mt-16 relative">
             {/* Shadow overlays */}
-            <div className="absolute inset-y-0 left-0 w-10 sm:w-20 md:w-32 lg:w-40 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-10 sm:w-20 md:w-32 lg:w-40 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 left-0 w-10 sm:w-20 md:w-32 lg:w-48 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-10 sm:w-20 md:w-32 lg:w-48 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
 
-            <RevealWrapper origin="down" delay={200} duration={1200} distance="50px" reset>
-                <div className={`${styles.padding} min-h-[280px] relative z-20`}>
+            <div className={`${styles.padding} min-h-[280px] relative z-20`}>
+                <ScrollReveal direction="up">
                     <div className="animate-fadeIn max-w-4xl mx-auto text-center">
                         <div>
                             <span className="px-4 py-2 glass rounded-full text-sm inline-block">
@@ -128,26 +123,24 @@ const Feedbacks: React.FC = () => {
                             Our <span className="text-gradient">Testimonials.</span>
                         </h2>
                     </div>
-                </div>
-            </RevealWrapper>
+                </ScrollReveal>
+            </div>
 
-            <RevealWrapper origin="right" delay={200} duration={1200} distance="50px" reset>
-                <div className="relative z-20">
-                    <div
-                        ref={scrollContainerRef}
-                        onMouseEnter={handleHover}
-                        onMouseLeave={handleHoverEnd}
-                        className={`-mt-20 pb-16 ${styles.paddingX} 
-                        flex space-x-6 overflow-x-hidden
-                        scrollbar-none sm:scrollbar-thin sm:scrollbar-thumb-gray-600 sm:scrollbar-track-gray-800
-                        sm:space-x-8 relative`}
-                    >
-                        {testimonials.map((testimonial, index) => (
-                            <FeedbackCard key={`${testimonial.name}-${index}`} index={index} {...testimonial} />
-                        ))}
-                    </div>
+            <div className="relative z-20 ">
+                <div
+                    ref={scrollContainerRef}
+                    onMouseEnter={handleHover}
+                    onMouseLeave={handleHoverEnd}
+                    className={`-mt-20 pb-16 ${styles.paddingX} 
+            flex space-x-6 overflow-x-hidden
+            scrollbar-none sm:scrollbar-thin sm:scrollbar-thumb-gray-600 sm:scrollbar-track-gray-800
+            sm:space-x-8 relative`}
+                >
+                    {duplicated.map((testimonial, index) => (
+                        <FeedbackCard key={`${testimonial.name}-${index}`} index={index} {...testimonial} />
+                    ))}
                 </div>
-            </RevealWrapper>
+            </div>
         </section>
     );
 };
