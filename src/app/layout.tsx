@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     images: ["https://www.ausafulislam.xyz/images/og-image.jpg"]
   },
   verification: {
-    google: "",
+    google: "google-site-verification=sbs90YY8qpeLtda6g0taKeFqanqOK5Gk5EeiYu4icXE",
     yandex: "",
     other: {
       me: ["mailto:ausafdev@gmail.com"]
