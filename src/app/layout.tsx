@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     images: ["https://www.ausafulislam.xyz/images/og-image.jpg"]
   },
   verification: {
-    google: "google-site-verification=sbs90YY8qpeLtda6g0taKeFqanqOK5Gk5EeiYu4icXE",
+    google: "",
     yandex: "",
     other: {
       me: ["mailto:ausafdev@gmail.com"]
@@ -94,6 +94,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+      <meta name="google-site-verification" content="NaUf690lfIuTZBJkyF-I68rIiX-t0HiZe5xWgUQwNm0" />
+      </head>
       <body>
         <CustomCursor />
         <ClientBody>{children}</ClientBody>
