@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ausafulislam.github.io/sitemap.xml
+Sitemap: https://ausafulislam-xyz.vercel.app/sitemap.xml
