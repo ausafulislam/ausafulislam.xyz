@@ -8,9 +8,9 @@ export default function CodeInspiration() {
         <section className="w-full py-20 px-4 sm:px-8">
             <div className="max-w-6xl mx-auto">
                 <ScrollReveal direction="up">
-                    <h2 className="text-center font-extrabold text-4xl sm:text-5xl md:text-6xl mb-12">
+                    <h1 className="text-center font-extrabold text-4xl sm:text-5xl md:text-6xl mb-12">
                         Code <span className="text-gradient">Inspiration</span>
-                    </h2>
+                    </h1>
                 </ScrollReveal>
 
                 <ScrollReveal direction="up" delayMultiplier={0.2}>

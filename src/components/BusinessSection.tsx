@@ -45,7 +45,7 @@ export default function DeveloperOffer() {
                                 <ShinyText text="Developer-Built, Results Guaranteed" disabled={false} speed={3} />
                             </span>
                         </div>
-                        <div className="flex flex-1 justify-center text-center w-full max-w-4xl mx-auto px-2">
+                        <h1 className="flex flex-1 justify-center text-center w-full max-w-4xl mx-auto px-2">
                             <TextFocus
                                 sentence="Build & Grow Online"
                                 manualMode={false}
@@ -55,7 +55,7 @@ export default function DeveloperOffer() {
                                 pauseBetweenAnimations={1}
                                 className="text-4xl my-8 mx-4 sm:text-5xl lg:text-6xl font-bold"
                             />
-                        </div>
+                        </h1>
 
                         <p className="text-lg text-indigo-100">
                             As an independent developer, I craft <strong className="font-bold text-white">high-converting websites</strong> with a{' '}

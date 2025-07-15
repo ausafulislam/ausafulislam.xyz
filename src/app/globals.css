@@ -77,12 +77,12 @@
       ),
       radial-gradient(
         at 100% 0%,
-        hsla(210, 100%, 68%, 0.1) 100px,
+        hsla(240, 100%, 68%, 0.1) 100px,
         transparent 50%
       ),
       radial-gradient(
         at 50% 100%,
-        hsla(280, 100%, 68%, 0.1) 100px,
+        hsla(240, 100%, 68%, 0.1) 100px,
         transparent 50%
       );
   }
@@ -150,6 +150,35 @@ body {
     background-color: #3b82f6;
     color: #fff;
   }
+}
+
+/* Orbiting animation keyframes */
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg);
+  }
+}
+
+@keyframes orbit-reverse {
+  from {
+    transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg) translateX(var(--orbit-radius)) rotate(360deg);
+  }
+}
+
+.orbit {
+  animation: orbit var(--orbit-duration) linear infinite;
+  animation-delay: var(--orbit-delay);
+}
+
+.orbit-reverse {
+  animation: orbit-reverse var(--orbit-duration) linear infinite;
+  animation-delay: var(--orbit-delay);
 }
 
 /* TYPING EFFECT CSS */

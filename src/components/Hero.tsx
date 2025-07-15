@@ -41,7 +41,7 @@ export default function Hero() {
             </ScrollReveal>
 
             <ScrollReveal direction="up" delayMultiplier={0.1}>
-              <div className="font-bold mt-6 w-full max-w-4xl mx-auto px-2">
+              <h1 className="font-bold mt-6 w-full max-w-4xl mx-auto px-2">
                 <TextFocus
                   sentence="Modern Full Stack & AI Developer"
                   manualMode={false}
@@ -54,7 +54,7 @@ export default function Hero() {
               xl:text-[3.5rem]
               2xl:text-[4rem]"
                 />
-              </div>
+              </h1>
             </ScrollReveal>
 
             <ScrollReveal direction="up" delayMultiplier={0.2}>
@@ -77,12 +77,12 @@ export default function Hero() {
                     <RiArrowRightLine />
                   </AnimatedButton>
                 </Link>
-                <Link href="#contact">
+                <Link href="/Ausaf Professional Resume.pdf" download>
                   <AnimatedButton
                     className="flex items-center gap-2 hover:scale-105 transition-transform duration-300"
                     containerClassName="h-14 w-auto"
                   >
-                    <span>Let's Connect</span>
+                    <span>Download Resume</span>
                   </AnimatedButton>
                 </Link>
               </div>
@@ -127,7 +127,7 @@ export default function Hero() {
                     <div className="absolute z-10">
                       <Image
                         src="/images/logo.png"
-                        alt="Profile Initial"
+                        alt="Ausaf Ul Islam Brand Logo"
                         width={50}
                         height={50}
                         className="w-20 h-20 object-cover rounded-full"

@@ -15,6 +15,7 @@ export default function ClientBody({
   return (
     <body suppressHydrationWarning>
       {children}
+      
     </body>
   );
 }

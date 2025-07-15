@@ -1,130 +1,250 @@
-"use client";
+"use client"
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 
-const TerminalTypingEffect = () => {
-    const [text, setText] = useState<string>("");
-    const containerRef = useRef<HTMLDivElement>(null);
-
-    const fullText = `> init ausaf.dev
-
-Booting up portfolio workspace...
-Loading modules...
-Fetching latest projects...
-All systems ready ✅
-
-
-> ausaf.getSkills()
-{
-  frontend: ['React', 'Next.js', 'TypeScript', 'JavaScript', 'HTML', 'CSS'],
-  backend: ['Node.js', 'Express', 'MongoDB', 'REST APIs'],
-  python: ['Flask', 'FastAPI', 'Streamlit'],
-  ai_agents: ['LangChain', 'Autogen Studio', 'OpenAI Assistants'],
+interface TerminalLine {
+    text: string
+    type: "command" | "output" | "success" | "loading" | "error" | "info"
+    delay?: number
 }
 
+const TerminalTypingEffect = () => {
+    // State management
+    const [currentLineIndex, setCurrentLineIndex] = useState(0)
+    const [currentText, setCurrentText] = useState("")
+    const [completedLines, setCompletedLines] = useState<TerminalLine[]>([])
+    const [isInstalling, setIsInstalling] = useState(false)
+    const [installProgress, setInstallProgress] = useState(0)
+    const [isPaused, setIsPaused] = useState(false)
+    const containerRef = useRef<HTMLDivElement>(null)
 
-> ausaf.status
-"Available for remote opportunities — freelance or full-time."
+    // Terminal content configuration
+    const terminalLines: TerminalLine[] = useMemo(() => [
+        { text: "> init ausaf.dev", type: "command" },
+        { text: "Initializing portfolio workspace...", type: "loading", delay: 500 },
+        { text: "✓ Environment setup complete", type: "success", delay: 800 },
+        { text: "", type: "output" },
+        { text: "> npm install developer-skills", type: "command", delay: 1000 },
+        { text: "Installing packages...", type: "loading", delay: 300 },
+        { text: "", type: "output" },
+        { text: "> ausaf.getSkills()", type: "command", delay: 1500 },
+        {
+            text: `{
+  frontend: ['React', 'Next.js', 'TypeScript', 'Tailwind'],
+  backend: ['Node.js', 'Express', 'MongoDB', 'PostgreSQL'],
+  ai: ['LangChain', 'OpenAI', 'RAG Pipelines'],
+  devops: ['Docker', 'AWS', 'Vercel']
+}`,
+            type: "output",
+            delay: 800,
+        },
+        { text: "", type: "output" },
+        { text: "> ausaf.status", type: "command", delay: 1000 },
+        { text: "🟢 Available for opportunities", type: "success", delay: 500 },
+        { text: "💼 Open to freelance & full-time", type: "info", delay: 300 },
+        { text: "", type: "output" },
+        { text: "> contact.me", type: "command", delay: 800 },
+        {
+            text: "Let's collaborate on web development, AI, or innovative solutions.",
+            type: "info",
+            delay: 600,
+        },
+        { text: "✨ Portfolio loaded!", type: "success", delay: 1000 },
+    ], [])
 
+    // Syntax highlighting
+    const highlightSyntax = useCallback((text: string) => {
+        const keywords = ['React', 'Next.js', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'LangChain', 'OpenAI', 'Docker', 'AWS', 'Vercel']
+        const sections = ['frontend', 'backend', 'ai', 'devops']
 
-> contact.me
-"Let’s collaborate on something impactful — web, AI, or agent-powered experiences."
-`;
+        return text.split(/(\{|\}|\[|\]|:|,|'.*?'|".*?"|`.*?`|\b\w+\b)/g).map((token, i) => {
+            if (!token) return null
 
+            if (/^(['"`]).*\1$/.test(token)) return <span key={i} className="text-amber-300">{token}</span>
+            if (keywords.includes(token)) return <span key={i} className="text-purple-400 font-medium">{token}</span>
+            if (sections.includes(token)) return <span key={i} className="text-emerald-400 font-medium">{token}</span>
+            if (/^[{}[\]:,]$/.test(token)) return <span key={i} className="text-gray-500">{token}</span>
+            if (/^(✓|✨|🟢)$/.test(token)) return <span key={i} className="text-2xl">{token}</span>
+
+            return <span key={i}>{token}</span>
+        })
+    }, [])
+
+    // Line styling
+    const getLineStyle = (type: string) => {
+        const styles = {
+            command: "text-cyan-400 font-mono font-medium",
+            success: "text-green-400",
+            error: "text-red-400",
+            loading: "text-yellow-400",
+            info: "text-blue-300",
+            output: "text-gray-300",
+        }
+        return styles[type as keyof typeof styles] || styles.output
+    }
+
+    // Animation effects
     useEffect(() => {
-        let i = 0;
-        const typingInterval = setInterval(() => {
-            if (i < fullText.length) {
-                setText(fullText.substring(0, i + 1));
-                i++;
-                if (containerRef.current) {
-                    containerRef.current.scrollTop = containerRef.current.scrollHeight;
-                }
-            } else {
-                clearInterval(typingInterval);
+        if (isPaused || currentLineIndex >= terminalLines.length) {
+            if (currentLineIndex >= terminalLines.length) {
+                setTimeout(() => {
+                    setCurrentLineIndex(0)
+                    setCompletedLines([])
+                    setCurrentText("")
+                }, 4000)
             }
-        }, 30);
-        return () => clearInterval(typingInterval);
-    }, [fullText]);
-
-    const highlightSyntax = (line: string): JSX.Element[] => {
-        const parts: JSX.Element[] = [];
-
-        const patterns: { regex: RegExp; className: string }[] = [
-            { regex: /(^> .*)/, className: "text-blue-400 font-semibold" },
-            { regex: /(['"`][^'"`]*['"`])/g, className: "text-amber-400" },
-            {
-                regex: /\b(frontend|backend|design|python|ai_ml|ai_agents|generative_ai|devops)\b/g,
-                className: "text-cyan-800",
-            },
-            {
-                regex:
-                    /\b(React|Next\.js|TypeScript|JavaScript|HTML|CSS|Node\.js|Express|MongoDB|Figma|Tailwind CSS|UI\/UX|Flask|FastAPI|Streamlit|Git|GitHub|Vercel|Netlify|Pandas|NumPy|TensorFlow|scikit-learn|OpenAI API|LangChain|AutoGen|Autogen Studio|LLMs|RAG Pipelines|Agentic Workflows|Prompt Engineering|OpenAI Assistants API)\b/g,
-                className: "text-purple-400",
-            },
-            {
-                regex: /\b(true|false|null|undefined|new|function|let|const|var|return)\b/g,
-                className: "text-green-400",
-            },
-            { regex: /[{}[\]:,]/g, className: "text-gray-400" },
-        ];
-
-        let remaining = line;
-
-        while (remaining.length > 0) {
-            let matched = false;
-
-            for (const { regex, className } of patterns) {
-                const match = regex.exec(remaining);
-                if (match && match.index !== undefined) {
-                    const matchedText = match[0];
-                    if (match.index > 0) {
-                        parts.push(<span key={crypto.randomUUID()}>{remaining.slice(0, match.index)}</span>);
-                    }
-                    parts.push(
-                        <span key={crypto.randomUUID()} className={className}>
-                            {matchedText}
-                        </span>
-                    );
-                    remaining = remaining.slice(match.index + matchedText.length);
-                    matched = true;
-                    break;
-                }
-            }
-
-            if (!matched) {
-                parts.push(<span key={crypto.randomUUID()}>{remaining}</span>);
-                break;
-            }
+            return
         }
 
-        return parts;
-    };
+        const currentLine = terminalLines[currentLineIndex]
+        const delay = currentLine.delay || 0
+
+        if (currentLine.text === "Installing packages...") {
+            setIsInstalling(true)
+            setInstallProgress(0)
+            const interval = setInterval(() => {
+                setInstallProgress(prev => {
+                    if (prev >= 100) {
+                        clearInterval(interval)
+                        setIsInstalling(false)
+                        setTimeout(() => {
+                            setCompletedLines(lines => [...lines, currentLine])
+                            setCurrentLineIndex(i => i + 1)
+                        }, 500)
+                        return 100
+                    }
+                    return prev + Math.random() * 15 + 5
+                })
+            }, 100)
+            return () => clearInterval(interval)
+        }
+
+        const typingSpeed = currentLine.type === "command" ? 80 : 30
+        const timeout = setTimeout(() => {
+            let charIndex = 0
+            const interval = setInterval(() => {
+                if (charIndex < currentLine.text.length) {
+                    setCurrentText(currentLine.text.slice(0, charIndex + 1))
+                    charIndex++
+                } else {
+                    clearInterval(interval)
+                    setCompletedLines(lines => [...lines, currentLine])
+                    setCurrentText("")
+                    setCurrentLineIndex(i => i + 1)
+                }
+            }, typingSpeed)
+            return () => clearInterval(interval)
+        }, delay)
+
+        return () => clearTimeout(timeout)
+    }, [currentLineIndex, isPaused, terminalLines])
+
+    // Auto-scroll
+    useEffect(() => {
+        containerRef.current?.scrollTo({
+            top: containerRef.current.scrollHeight,
+            behavior: 'smooth'
+        })
+    }, [completedLines, currentText, installProgress])
 
     return (
-        <div className=" w-full flex justify-center p-4">
-            <div
-                ref={containerRef}
-                className="w-full max-w-3xl h-[420px] md:h-[500px] overflow-y-auto rounded-xl bg-gradient-to-br from-[#0d0d0d] via-[#111827] to-[#1f2937] text-white shadow-2xl border border-white/10 p-6 font-mono text-sm custom-scrollbar relative"
-            >
-                {/* Optional: Terminal Top Bar */}
-                <div className="absolute top-2 left-4 flex space-x-2">
-                    <span className="w-3 h-3 bg-red-500 rounded-full"></span>
-                    <span className="w-3 h-3 bg-yellow-500 rounded-full"></span>
-                    <span className="w-3 h-3 bg-green-500 rounded-full"></span>
+        <div className="flex justify-center p-4">
+            <div className="w-full max-w-3xl">
+                {/* Terminal Header */}
+                <div className=" bg-gradient-to-br from-[#0d0d0d] via-[#111827] to-[#1f2937] rounded-t-lg px-4 py-3 flex items-center justify-between border-b border-gray-700">
+                    <div className="flex space-x-2">
+                        <div className={`w-3 h-3 rounded-full bg-red-500`} />
+                        <div className={`w-3 h-3 rounded-full bg-yellow-500`} />
+                        <div className={`w-3 h-3 rounded-full bg-green-500`} />
+                    </div>
+                    <div className="text-gray-300 text-sm font-mono">ausaf@portfolio:~</div>
+                    <button
+                        onClick={() => setIsPaused(!isPaused)}
+                        className="text-xs text-gray-400 hover:text-white px-2 py-1 rounded hover:bg-gray-700 transition-colors"
+                    >
+                        {isPaused ? '▶ Resume' : '⏸ Pause'}
+                    </button>
                 </div>
 
-                <pre className="mt-6 whitespace-pre-wrap break-words">
-                    {text.split("\n").map((line, index) => (
-                        <div key={index} className=" leading-relaxed">
-                            {highlightSyntax(line)}
-                        </div>
-                    ))}
-                    <span className="inline-block w-2 h-4 ml-1 bg-white animate-blink"></span>
-                </pre>
+                {/* Terminal Body */}
+                <div
+                    ref={containerRef}
+                    className="h-96 overflow-y-auto custom-scrollbar font-mono text-sm  bg-gradient-to-br from-[#0d0d0d] via-[#111827] to-[#1f2937] text-gray-100 rounded-b-lg p-4 border border-gray-700"
+                >
+                    <div className="space-y-2">
+                        <AnimatePresence>
+                            {completedLines.map((line, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    className={getLineStyle(line.type)}
+                                >
+                                    {line.text === "" ? <br /> :
+                                        line.type === "output" && line.text.includes("{") ?
+                                            <pre className="whitespace-pre-wrap">{highlightSyntax(line.text)}</pre> :
+                                            highlightSyntax(line.text)}
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+
+                        {isInstalling && (
+                            <div className="space-y-2">
+                                <div className="flex items-center space-x-2 text-yellow-400">
+                                    <motion.div
+                                        animate={{ rotate: 360 }}
+                                        transition={{ duration: 1, repeat: Infinity }}
+                                        className="w-4 h-4 border-2 border-yellow-400 border-t-transparent rounded-full"
+                                    />
+                                    <span>Installing packages...</span>
+                                </div>
+                                <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
+                                    <motion.div
+                                        className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+                                        initial={{ width: 0 }}
+                                        animate={{ width: `${installProgress}%` }}
+                                        transition={{ duration: 0.2 }}
+                                    />
+                                </div>
+                                <div className="text-gray-400 text-xs">
+                                    {Math.round(installProgress)}% complete
+                                </div>
+                            </div>
+                        )}
+
+                        {currentText && !isInstalling && (
+                            <div className={getLineStyle(terminalLines[currentLineIndex]?.type || "output")}>
+                                {terminalLines[currentLineIndex]?.type === "output" && currentText.includes("{") ?
+                                    <pre className="whitespace-pre-wrap">{highlightSyntax(currentText)}</pre> :
+                                    highlightSyntax(currentText)}
+                            </div>
+                        )}
+
+                        {(currentText || isInstalling) && (
+                            <motion.span
+                                animate={{ opacity: [1, 0.5, 1] }}
+                                transition={{ duration: 1, repeat: Infinity }}
+                                className="inline-block w-2 h-5 bg-cyan-400 rounded-sm ml-1"
+                            />
+                        )}
+                    </div>
+                </div>
+
+                {/* Footer */}
+                <div className="mt-3 text-center text-gray-500 text-xs">
+                    <div className="inline-flex items-center space-x-2">
+                        <motion.div
+                            animate={{ scale: [1, 1.1, 1] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                            className="w-2 h-2 bg-green-400 rounded-full"
+                        />
+                        <span>Interactive terminal simulation</span>
+                    </div>
+                </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default TerminalTypingEffect;
+export default TerminalTypingEffect

@@ -8,15 +8,12 @@ import {
   RiGithubLine,
   RiExternalLinkLine,
   RiReactjsLine,
-  RiArrowRightLine,
 } from "react-icons/ri";
 import {
   SiNextdotjs,
   SiTailwindcss,
   SiMongodb,
   SiFirebase,
-  SiGraphql,
-  SiTypescript,
   SiHtml5,
   SiCss3,
   SiJavascript,
@@ -269,62 +266,63 @@ const categories = ["All", "Web Apps", "Mobile", "UI/UX", "E-Commerce"];
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
-    <ScrollReveal direction="up" delayMultiplier={index * 0.1}>
-      <Card className="overflow-hidden h-full glass-card border-0 group">
-        <div className="relative h-48 overflow-hidden">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            crossOrigin="anonymous"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex justify-end gap-3">
-            <Link
-              href={project.githubLink}
-              className="w-10 h-10 glass rounded-full flex items-center justify-center"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`View GitHub for ${project.title}`}
-            >
-              <RiGithubLine className="text-xl" />
-            </Link>
-            <Link
-              href={project.liveLink}
-              className="w-10 h-10 glass rounded-full flex items-center justify-center"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`View live ${project.title}`}
-            >
-              <RiExternalLinkLine className="text-xl" />
-            </Link>
-          </div>
-        </div>
-        <div className="p-6">
-          <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-          <p className="text-white/70 mb-4 line-clamp-3">{project.description}</p>
-          <div className="flex flex-wrap items-center gap-3 pt-2 border-t border-white/10">
-            {project.categories.map((category, idx) => (
-              <span
-                key={`cat-${idx}`}
-                className="text-xs px-2 py-1 bg-white/10 rounded-full"
+
+      <ScrollReveal direction="up" delayMultiplier={index * 0.1}>
+        <Card className="overflow-hidden h-full glass-card border-0 group">
+          <div className="relative h-48 overflow-hidden">
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-110"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              crossOrigin="anonymous"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex justify-end gap-3">
+              <Link
+                href={project.githubLink}
+                className="w-10 h-10 glass rounded-full flex items-center justify-center"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View GitHub for ${project.title}`}
               >
-                {category}
-              </span>
-            ))}
+                <RiGithubLine className="text-xl" />
+              </Link>
+              <Link
+                href={project.liveLink}
+                className="w-10 h-10 glass rounded-full flex items-center justify-center"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View live ${project.title}`}
+              >
+                <RiExternalLinkLine className="text-xl" />
+              </Link>
+            </div>
           </div>
-          <div className="flex items-center gap-3 mt-3">
-            {project.techStack.map((tech, idx) => (
-              <div key={idx} title={tech.name}>
-                {tech.icon}
-              </div>
-            ))}
+          <div className="p-6">
+            <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+            <p className="text-white/70 mb-4 line-clamp-3">{project.description}</p>
+            <div className="flex flex-wrap items-center gap-3 pt-2 border-t border-white/10">
+              {project.categories.map((category, idx) => (
+                <span
+                  key={`cat-${idx}`}
+                  className="text-xs px-2 py-1 bg-white/10 rounded-full"
+                >
+                  {category}
+                </span>
+              ))}
+            </div>
+            <div className="flex items-center gap-3 mt-3">
+              {project.techStack.map((tech, idx) => (
+                <div key={idx} title={tech.name}>
+                  {tech.icon}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </Card>
-    </ScrollReveal>
+        </Card>
+      </ScrollReveal>
   );
 }
 
@@ -345,9 +343,9 @@ export default function Projects() {
             <span className="px-4 py-2 glass rounded-full text-sm">
               <ShinyText text="Portfolio" disabled={false} speed={3} />
             </span>
-            <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] mt-2">
+            <h1 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] mt-2">
               Featured <span className="text-gradient">Projects.</span>
-            </h2>
+            </h1>
             <p className="mt-4 max-w-2xl mx-auto text-white/70">
               Check out some of my recent work. Each project represents unique challenges
               and innovative solutions using modern technologies and best practices.

@@ -14,6 +14,7 @@ import { TbHexagonLetterUFilled } from "react-icons/tb";
 import { FaLaptopCode } from "react-icons/fa";
 import ShinyText from "./ShinyText";
 import ScrollReveal from "./ScrollReveal";
+import { Lens } from "./magicui/lens";
 
 interface Certification {
   title: string;
@@ -88,47 +89,55 @@ const CertificateModal = ({ certification }: { certification: Certification }) =
         </button>
       </DialogTrigger>
 
-      <DialogContent className="w-[90vw] md:w-[700px] h-[520px] rounded-2xl p-4 border-gradient bg-black/70 backdrop-blur-xl text-white shadow-xl">
-        <DialogTitle className="sr-only">{certification.title}</DialogTitle>
+      <DialogContent className="w-[90vw] md:w-[900px] h-[520px] rounded-2xl p-5 border-gradient bg-black/70 backdrop-blur-xl text-white shadow-2xl">
+        <div className="flex flex-col justify-between h-full space-y-4">
+          {/* Title */}
+          <DialogTitle className="text-2xl font-semibold text-white text-center">
+            {certification.title}
+          </DialogTitle>
 
-        <div className="flex flex-col items-center justify-center h-full space-y-4">
-          {/* Certificate Image */}
-          <div className="relative w-full h-[500px] ">
-            <Image
-              src={certification.imagePath}
-              alt={certification.title}
-              fill
-              className="object-contain rounded-xl"
-              quality={100}
-              priority
-            />
+          <div className="relative w-full h-[300px] md:h-[350px] rounded-xl overflow-hidden shadow-md">
+            <Lens defaultPosition={{ x: 30, y: 30 }}>
+              <Image
+                src={certification.imagePath}
+                alt={certification.title}
+                width={900} // or adjust as needed
+                height={600}
+                className="object-contain w-full h-full"
+                quality={100}
+                priority
+              />
+            </Lens>
           </div>
 
           {/* Certificate Info */}
-          <div className="flex flex-wrap items-center justify-between w-full gap-4 text-xs text-gray-300 px-1">
+          <div className="flex flex-wrap justify-between items-center text-sm text-gray-300 px-1 mt-1">
             <div className="flex items-center gap-1">
-              <span className="font-medium">Issued by:</span>
-              {certification.issuer}
+              <span className="font-medium text-white">Issued by:</span>
+              <span>{certification.issuer}</span>
             </div>
             <div className="flex items-center gap-1">
-              <span className="font-medium">Date:</span>
-              {certification.date}
+              <span className="font-medium text-white">Date:</span>
+              <span>{certification.date}</span>
             </div>
           </div>
 
-          {/* Optional Credential Button */}
+          {/* View Credential Link */}
           {certification.credentialUrl && certification.credentialUrl !== "#" && (
-            <Link
-              href={certification.credentialUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-medium text-[#38bdf8] hover:underline"
-            >
-              View Credential
-            </Link>
+            <div className="flex justify-center mt-2">
+              <Link
+                href={certification.credentialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors duration-200 underline-offset-4 hover:underline"
+              >
+                View Credential
+              </Link>
+            </div>
           )}
         </div>
       </DialogContent>
+
     </Dialog>
   );
 };
@@ -197,9 +206,9 @@ export default function Certifications() {
             <span className="px-4 py-2 glass rounded-full text-sm">
               <ShinyText text="Professional Growth" disabled={false} speed={3} />
             </span>
-            <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] mt-2">
+            <h1 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] mt-2">
               My <span className="text-gradient">Certifications</span>
-            </h2>
+            </h1>
             <p className="mt-4 max-w-2xl mx-auto">
               Validated expertise through industry-recognized certifications demonstrating my commitment to professional excellence.
             </p>

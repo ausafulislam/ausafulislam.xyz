@@ -8,7 +8,6 @@ import {
 } from "react-icons/ri";
 import { SiDjango, SiTypescript, SiPython } from "react-icons/si";
 import { TbBrandThreejs } from "react-icons/tb";
-import { FaWordpress } from "react-icons/fa";
 import ShinyText from "./ShinyText";
 import { AnimatedButton } from "./AnimatedButton";
 import ScrollReveal from "./ScrollReveal";
@@ -33,7 +32,6 @@ const skills: Skill[] = [
   { name: "CSS3", icon: <RiCss3Fill className="text-4xl" />, color: "#F7DF1E", category: "frontend", proficiency: 92 },
   { name: "Three.js", icon: <TbBrandThreejs className="text-4xl" />, color: "#FFFFFF", category: "frontend", proficiency: 75 },
   { name: "Node.js", icon: <RiNodejsFill className="text-4xl" />, color: "#339933", category: "backend", proficiency: 92 },
-  { name: "WordPress", icon: <FaWordpress className="text-4xl" />, color: "#00749C", category: "backend", proficiency: 75 },
   { name: "Django", icon: <SiDjango className="text-4xl" />, color: "#8b5cf6", category: "backend", proficiency: 85 },
   { name: "Python", icon: <SiPython className="text-4xl" />, color: "#3776AB", category: "backend", proficiency: 78 },
   { name: "MongoDB", icon: <RiDatabase2Fill className="text-4xl" />, color: "#47A248", category: "database", proficiency: 88 },
@@ -77,9 +75,9 @@ export default function SkillsShowcase() {
             <span className="px-4 py-2 glass rounded-full text-sm">
               <ShinyText text="My Expertise" disabled={false} speed={3} />
             </span>
-            <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] mt-2">
+            <h1 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] mt-2">
               Work <span className="text-gradient">Experience.</span>
-            </h2>
+            </h1>
             <p className="mt-4 max-w-2xl mx-auto">
               A comprehensive overview of my technical skills and proficiency levels. These are the tools and
               technologies I use to build powerful, scalable, and visually stunning web applications.

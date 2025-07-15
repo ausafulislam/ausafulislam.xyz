@@ -17,6 +17,8 @@ import ShinyText from "./ShinyText";
 import { AnimatedButton } from "./AnimatedButton";
 import { TbBrandLinktree } from "react-icons/tb";
 import ScrollReveal from "./ScrollReveal";
+import OrbitingCirclesIcons from "./OrbitingCirclesIcons";
+import { AnimatedBeamIcons } from "./AnimatedBeamIcons";
 
 interface SocialLink {
   name: string;
@@ -113,9 +115,9 @@ export default function Contact() {
             <span className="px-4 py-2 glass rounded-full text-sm">
               <ShinyText text="Get In Touch" disabled={false} speed={3} />
             </span>
-            <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] mt-2">
+            <h1 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] mt-2">
               Contact <span className="text-gradient">Me.</span>
-            </h2>
+            </h1>
             <p className="mt-4 max-w-2xl mx-auto">
               Have a project in mind or want to discuss potential opportunities?
               I'm always open to new challenges and collaborations. Feel free to reach out!
@@ -125,12 +127,21 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <ScrollReveal direction="left" delayMultiplier={0.1}>
-            <div className="lg:col-span-1 h-full">
-              <div className="glass-card p-8 h-full transition-transform duration-700 hover:scale-[1.02]">
+            <div className="lg:col-span-1 flex flex-col gap-6 h-full">
+              {/* Box 1: Orbiting Circles */}
+              <div className="glass-card p-0 flex items-center justify-center h-[410px]">
+                <OrbitingCirclesIcons />
+              </div>
+              {/* Box 2: Let's Connect */}
+              <div className="glass-card p-8  h-[510px] ">
                 <h3 className="text-2xl font-bold mb-6">Let's connect</h3>
                 <div className="space-y-6 mb-10">
                   {contactInfo.map((info, index) => (
-                    <ScrollReveal key={index} direction="left" delayMultiplier={0.1 + (index * 0.1)}>
+                    <ScrollReveal
+                      key={index}
+                      direction="left"
+                      delayMultiplier={0.1 + index * 0.1}
+                    >
                       <div className="flex items-start gap-4">
                         <div className="glass rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
                           {info.icon}
@@ -143,10 +154,14 @@ export default function Contact() {
                     </ScrollReveal>
                   ))}
                 </div>
-                <h4 className="text-lg font-medium mb-4">Follow me</h4>
+                <h4 className="text-lg font-medium  mb-4">Follow me</h4>
                 <div className="flex gap-3">
                   {socialLinks.map((social, index) => (
-                    <ScrollReveal key={index} direction="left" delayMultiplier={0.4 + (index * 0.1)}>
+                    <ScrollReveal
+                      key={index}
+                      direction="left"
+                      delayMultiplier={0.4 + index * 0.1}
+                    >
                       <Link
                         href={social.url}
                         className="glass w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
@@ -159,110 +174,125 @@ export default function Contact() {
                     </ScrollReveal>
                   ))}
                 </div>
+
+                <div className="py-8">
+                  <ScrollReveal
+                    direction="left"
+                    delayMultiplier={0.4 * 0.1}
+                  >
+                    <p className="text-sm sm:text-base text-muted-foreground text-center sm:text-left leading-relaxed">
+                      Let’s build something incredible together—connect with me and stay inspired!
+                    </p>
+                  </ScrollReveal>
+                </div>
               </div>
             </div>
           </ScrollReveal>
 
-          <div className="lg:col-span-2 h-full w-full"> {/* Main container with full width */}
-            <ScrollReveal
-              direction="right"
-              delayMultiplier={0.2}
-              className="w-full h-full" 
-            >
-              <div className="glass-card p-8 h-full w-full transition-transform duration-700 hover:scale-[1.02]">
-                <h3 className="text-2xl font-bold mb-6">Send me a message</h3>
-                <form onSubmit={handleSubmit} className="space-y-5 w-full">
+          {/* Full-height Message Form */}
+          <div className="lg:col-span-2 w-full space-y-5">
+            {/* Message Form Section */}
+            <div className="w-full">
+              <ScrollReveal direction="right" delayMultiplier={0.2} className="w-full">
+                <div className="glass-card w-full h-full p-8  ">
+                  <h3 className="text-2xl font-bold mb-6">Send me a message</h3>
+                  <form onSubmit={handleSubmit} className="space-y-5 w-full">
+                    {/* Name & Email */}
+                    <ScrollReveal direction="right" delayMultiplier={0.3} className="w-full">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
+                        <div>
+                          <label htmlFor="name" className="block text-sm mb-2">Your Name</label>
+                          <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            className="glass-input w-full"
+                            placeholder="John Doe"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="email" className="block text-sm mb-2">Your Email</label>
+                          <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            className="glass-input w-full"
+                            placeholder="john@example.com"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+                      </div>
+                    </ScrollReveal>
 
-                  {/* Name and Email - Single ScrollReveal for the grid */}
-                  <ScrollReveal direction="right" delayMultiplier={0.3} className="w-full">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
+                    {/* Subject */}
+                    <ScrollReveal direction="right" delayMultiplier={0.4} className="w-full">
                       <div>
-                        <label htmlFor="name" className="block text-sm mb-2">Your Name</label>
+                        <label htmlFor="subject" className="block text-sm mb-2">Subject</label>
                         <input
                           type="text"
-                          id="name"
-                          name="name"
+                          id="subject"
+                          name="subject"
                           className="glass-input w-full"
-                          placeholder="John Doe"
-                          value={formData.name}
+                          placeholder="Project Inquiry"
+                          value={formData.subject}
                           onChange={handleChange}
                           required
                         />
                       </div>
+                    </ScrollReveal>
+
+                    {/* Message */}
+                    <ScrollReveal direction="right" delayMultiplier={0.5} className="w-full">
                       <div>
-                        <label htmlFor="email" className="block text-sm mb-2">Your Email</label>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
+                        <label htmlFor="message" className="block text-sm mb-2">Message</label>
+                        <textarea
+                          id="message"
+                          name="message"
+                          rows={5}
                           className="glass-input w-full"
-                          placeholder="john@example.com"
-                          value={formData.email}
+                          placeholder="Hello Ausaf, I'd like to discuss a project..."
+                          value={formData.message}
                           onChange={handleChange}
                           required
-                        />
+                        ></textarea>
                       </div>
-                    </div>
-                  </ScrollReveal>
+                    </ScrollReveal>
 
-                  {/* Subject - Single ScrollReveal */}
-                  <ScrollReveal direction="right" delayMultiplier={0.4} className="w-full">
-                    <div>
-                      <label htmlFor="subject" className="block text-sm mb-2">Subject</label>
-                      <input
-                        type="text"
-                        id="subject"
-                        name="subject"
-                        className="glass-input w-full"
-                        placeholder="Project Inquiry"
-                        value={formData.subject}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                  </ScrollReveal>
+                    {/* Submit Button */}
+                    <ScrollReveal direction="up" delayMultiplier={0.6} className="w-full">
+                      <div className="mt-12 flex justify-center w-full">
+                        <AnimatedButton
+                          type="submit"
+                          className="flex items-center justify-center gap-2 text-sm sm:text-base px-4 sm:px-5 py-2 sm:py-3 hover:scale-105 transition-transform duration-300"
+                          containerClassName="w-full max-w-[220px] sm:max-w-[240px] h-11 sm:h-12"
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <span className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></span>
+                              Sending...
+                            </>
+                          ) : (
+                            <>
+                              Send Message
+                              <RiExternalLinkLine className="text-base" />
+                            </>
+                          )}
+                        </AnimatedButton>
+                      </div>
+                    </ScrollReveal>
+                  </form>
+                </div>
+              </ScrollReveal>
+            </div>
 
-                  {/* Message - Single ScrollReveal */}
-                  <ScrollReveal direction="right" delayMultiplier={0.5} className="w-full">
-                    <div>
-                      <label htmlFor="message" className="block text-sm mb-2">Message</label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        rows={5}
-                        className="glass-input w-full"
-                        placeholder="Hello Ausaf, I'd like to discuss a project..."
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
-                      ></textarea>
-                    </div>
-                  </ScrollReveal>
-
-                  {/* Submit Button - Single ScrollReveal */}
-                  <ScrollReveal direction="up" delayMultiplier={0.6} className="w-full">
-                    <div className="mt-12 flex justify-center w-full">
-                      <AnimatedButton
-                        type="submit"
-                        className="flex items-center justify-center gap-2 text-sm sm:text-base px-4 sm:px-5 py-2 sm:py-3 hover:scale-105 transition-transform duration-300"
-                        containerClassName="w-full max-w-[220px] sm:max-w-[240px] h-11 sm:h-12"
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <span className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></span>
-                            Sending...
-                          </>
-                        ) : (
-                          <>
-                            Send Message
-                            <RiExternalLinkLine className="text-base" />
-                          </>
-                        )}
-                      </AnimatedButton>
-                    </div>
-                  </ScrollReveal>
-                </form>
-              </div>
+            {/* Animated Beam Icons Card */}
+            <ScrollReveal direction="right" delayMultiplier={0.3}>
+              <AnimatedBeamIcons />
             </ScrollReveal>
           </div>
         </div>
