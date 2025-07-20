@@ -69,12 +69,6 @@ export const metadata: Metadata = {
         height: 630,
         alt: "Ausaf ul Islam - FullStack Developer",
       },
-      {
-        url: "/images/twitter-card.gif",
-        width: 1200,
-        height: 630,
-        alt: "Ausaf ul Islam - FullStack Developer",
-      },
     ],
     locale: "en_US",
   },
