@@ -26,10 +26,12 @@ import {
   SiOpenai,
   SiApachenetbeanside,
   SiVite,
+  SiGooglegemini,
 } from "react-icons/si";
 import ShinyText from "./ShinyText";
 import { AnimatedButton } from "./AnimatedButton";
 import ScrollReveal from "./ScrollReveal";
+import { FaGithub } from "react-icons/fa";
 
 interface TechStack {
   name: string;
@@ -70,12 +72,28 @@ const projects: Project[] = [
     image: "/projects/nexmart.jpg",
     techStack: [
       { name: "Next.js", icon: <SiNextdotjs className="text-lg text-white" /> },
-      { name: "MongoDB", icon: <SiMongodb className="text-lg text-green-500" /> },
+      { name: "Firebase", icon: <SiFirebase className="text-lg text-green-500" /> },
       { name: "Tailwind CSS", icon: <SiTailwindcss className="text-lg text-sky-400" /> },
     ],
     liveLink: "https://nexmart-ausaf.vercel.app/",
     githubLink: "https://github.com/ausafulislam",
     categories: ["Web Apps", "E-Commerce", "Mobile"],
+  },
+  {
+    title: "GitReadMe - Get GitHub ReadMe",
+    description:
+      "GitReadMe is a powerful and minimal AI-based tool that automatically generates and displays professional-quality README.md files for any public GitHub repository. Using OpenAI and GitHub API, it analyzes the repository content and produces a structured, clean, and user-friendly README. Built with Next.js and Tailwind CSS, it enhances project documentation and helps developers present their work more effectively.",
+    image: "/projects/gitreadme.jpg",
+    techStack: [
+      { name: "Next.js", icon: <SiNextdotjs className="text-lg text-white" /> },
+      { name: "Tailwind CSS", icon: <SiTailwindcss className="text-lg text-sky-400" /> },
+      { name: "Framer Motion", icon: <SiFramer className="text-lg text-pink-500" /> },
+      { name: "Gemini AI API", icon: <SiGooglegemini className="text-lg text-blue-400" /> },
+
+    ],
+    liveLink: "https://gitreadme-maker.vercel.app/",
+    githubLink: "https://github.com/ausafulislam/gitreadme-maker", // use your real repo URL here
+    categories: ["Web Apps", "Open Source", "Developer Tools"]
   },
   {
     title: "Blogo ASF - Blog Website",
@@ -267,62 +285,62 @@ const categories = ["All", "Web Apps", "Mobile", "UI/UX", "E-Commerce"];
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
 
-      <ScrollReveal direction="up" delayMultiplier={index * 0.1}>
-        <Card className="overflow-hidden h-full glass-card border-0 group">
-          <div className="relative h-48 overflow-hidden">
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              crossOrigin="anonymous"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex justify-end gap-3">
-              <Link
-                href={project.githubLink}
-                className="w-10 h-10 glass rounded-full flex items-center justify-center"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`View GitHub for ${project.title}`}
-              >
-                <RiGithubLine className="text-xl" />
-              </Link>
-              <Link
-                href={project.liveLink}
-                className="w-10 h-10 glass rounded-full flex items-center justify-center"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`View live ${project.title}`}
-              >
-                <RiExternalLinkLine className="text-xl" />
-              </Link>
-            </div>
+    <ScrollReveal direction="up" delayMultiplier={index * 0.1}>
+      <Card className="overflow-hidden h-full glass-card border-0 group">
+        <div className="relative h-48 overflow-hidden">
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            crossOrigin="anonymous"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex justify-end gap-3">
+            <Link
+              href={project.githubLink}
+              className="w-10 h-10 glass rounded-full flex items-center justify-center"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View GitHub for ${project.title}`}
+            >
+              <RiGithubLine className="text-xl" />
+            </Link>
+            <Link
+              href={project.liveLink}
+              className="w-10 h-10 glass rounded-full flex items-center justify-center"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View live ${project.title}`}
+            >
+              <RiExternalLinkLine className="text-xl" />
+            </Link>
           </div>
-          <div className="p-6">
-            <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-            <p className="text-white/70 mb-4 line-clamp-3">{project.description}</p>
-            <div className="flex flex-wrap items-center gap-3 pt-2 border-t border-white/10">
-              {project.categories.map((category, idx) => (
-                <span
-                  key={`cat-${idx}`}
-                  className="text-xs px-2 py-1 bg-white/10 rounded-full"
-                >
-                  {category}
-                </span>
-              ))}
-            </div>
-            <div className="flex items-center gap-3 mt-3">
-              {project.techStack.map((tech, idx) => (
-                <div key={idx} title={tech.name}>
-                  {tech.icon}
-                </div>
-              ))}
-            </div>
+        </div>
+        <div className="p-6">
+          <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+          <p className="text-white/70 mb-4 line-clamp-3">{project.description}</p>
+          <div className="flex flex-wrap items-center gap-3 pt-2 border-t border-white/10">
+            {project.categories.map((category, idx) => (
+              <span
+                key={`cat-${idx}`}
+                className="text-xs px-2 py-1 bg-white/10 rounded-full"
+              >
+                {category}
+              </span>
+            ))}
           </div>
-        </Card>
-      </ScrollReveal>
+          <div className="flex items-center gap-3 mt-3">
+            {project.techStack.map((tech, idx) => (
+              <div key={idx} title={tech.name}>
+                {tech.icon}
+              </div>
+            ))}
+          </div>
+        </div>
+      </Card>
+    </ScrollReveal>
   );
 }
 
