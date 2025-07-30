@@ -106,6 +106,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+        {/* this meta tag use for the google search console verificattion */}
+        <meta name="google-site-verification" content="NaUf690lfIuTZBJkyF-I68rIiX-t0HiZe5xWgUQwNm0" />
         <meta name="HandheldFriendly" content="true" />
         <script type="application/ld+json">
           {JSON.stringify({
