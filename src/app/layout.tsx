@@ -6,7 +6,7 @@ import { ScrollProgress } from "@/components/ScrollProgress";
 import { ChatWidget } from "@/components/ChatWidget";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ausafulislam-xyz.vercel.app"),
+  metadataBase: new URL("https://ausafulislam.vercel.app"),
   title: {
     default: "Ausaf ul Islam | FullStack Developer",
     template: "%s | Ausaf ul Islam"
@@ -22,11 +22,11 @@ export const metadata: Metadata = {
     "JavaScript Expert",
     "Modern Web Development"
   ],
-  authors: [{ name: "Ausaf ul Islam", url: "https://ausafulislam-xyz.vercel.app" }],
+  authors: [{ name: "Ausaf ul Islam", url: "https://ausafulislam.vercel.app" }],
   creator: "Ausaf ul Islam",
   publisher: "Ausaf ul Islam",
   alternates: {
-    canonical: "https://ausafulislam-xyz.vercel.app",
+    canonical: "https://ausafulislam.vercel.app",
   },
   robots: {
     index: true,
@@ -60,11 +60,17 @@ export const metadata: Metadata = {
     type: "website",
     title: "Ausaf ul Islam | FullStack Developer",
     description: "Ausaf ul Islam is a FullStack Developer and Assistant builder using Python, Next.js, and TypeScript.",
-    url: "https://ausafulislam-xyz.vercel.app",
+    url: "https://ausafulislam.vercel.app",
     siteName: "Ausaf ul Islam Portfolio",
     images: [
       {
         url: "/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Ausaf ul Islam - FullStack Developer",
+      },
+      {
+        url: "/images/twitter-card.gif",
         width: 1200,
         height: 630,
         alt: "Ausaf ul Islam - FullStack Developer",
@@ -107,7 +113,7 @@ export default function RootLayout({
             "@type": "Person",
             "name": "Ausaf ul Islam",
             "jobTitle": "FullStack Developer",
-            "url": "https://ausafulislam-xyz.vercel.app/",
+            "url": "https://ausafulislam.vercel.app/",
             "sameAs": [
               "https://github.com/ausafulislam",
               "https://linkedin.com/in/ausafulislam",

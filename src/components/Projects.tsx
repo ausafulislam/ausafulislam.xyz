@@ -28,6 +28,7 @@ import {
   SiVite,
   SiGooglegemini,
 } from "react-icons/si";
+import { GrGamepad } from "react-icons/gr";
 import ShinyText from "./ShinyText";
 import { AnimatedButton } from "./AnimatedButton";
 import ScrollReveal from "./ScrollReveal";
@@ -94,6 +95,19 @@ const projects: Project[] = [
     liveLink: "https://gitreadme-maker.vercel.app/",
     githubLink: "https://github.com/ausafulislam/gitreadme-maker", // use your real repo URL here
     categories: ["Web Apps", "Open Source", "Developer Tools"]
+  },
+  {
+    title: "Snake Game - Python Pygame Project",
+    description:
+      "A classic arcade-style Snake Game built using Python and Pygame. This project features smooth snake movement, collision detection, scoring, and modular clean code that’s beginner-friendly and easy to extend. It's part of a growing Python Games Collection designed to help learners explore game development.",
+    image: "/projects/snake-game.jpg", // replace with your actual image path
+    techStack: [
+      { name: "Python", icon: <SiPython className="text-lg text-yellow-400" /> },
+      { name: "Pygame", icon: <GrGamepad className="text-lg text-green-400" /> },
+    ],
+    liveLink: "", // optional, leave empty or add a YouTube video link if you have one
+    githubLink: "https://github.com/ausafulislam/Python_Games",
+    categories: ["Python Projects", "Games", "Open Source"]
   },
   {
     title: "Blogo ASF - Blog Website",
